@@ -1,0 +1,7 @@
+db.createCollection("users")
+db.createCollection("tweets")
+db.createCollection("comments")
+db.createCollection("likes")
+db.createCollection("retweets")
+db.createCollection("follows")
+db.createCollection("reports")
