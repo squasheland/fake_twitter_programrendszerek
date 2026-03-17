@@ -1,8 +1,19 @@
 import express, { type Request, type Response } from 'express';
+import cors from 'cors';
 import Database from './database/databse.js';
+import authRoutes from './endpoint/auth.js';
+import userRoutes from './endpoint/user.js';
 
 const app = express();
 const port = 3000;
+
+// Middleware
+app.use(cors({ origin: 'http://localhost:4200' }));
+app.use(express.json());
+
+// Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello World!');
