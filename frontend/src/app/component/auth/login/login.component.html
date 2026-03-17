@@ -1,0 +1,31 @@
+<div class="auth-container">
+  <mat-card class="auth-card">
+    <div class="logo">
+      <h1>🐦 Fake Twitter</h1>
+    </div>
+    <h2>Sign in to your account</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" placeholder="Email">
+        @if(loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+          <mat-error>Please enter a valid email</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" placeholder="Password">
+        @if(loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+          <mat-error>Password is required</mat-error>
+        }
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid" class="auth-btn">Sign in</button>
+    </form>
+    <p class="switch-auth">Don't have an account? <a routerLink="/register">Sign up</a></p>
+    @if(errorMessage) {
+      <div class="error-message">{{ errorMessage }}</div>
+    }
+  </mat-card>
+</div>

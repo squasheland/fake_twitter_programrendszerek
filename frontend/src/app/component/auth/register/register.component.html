@@ -1,0 +1,47 @@
+<div class="auth-container">
+<mat-card class="auth-card">
+    <div class="logo">
+      <h1>🐦 Fake Twitter</h1>
+    </div>
+    <h2>Join Fake Twitter today</h2>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="auth-form">
+        <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email" placeholder="Email">
+            @if(registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+            <mat-error>Please enter a valid email</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Username</mat-label>
+            <input matInput type="text" formControlName="username" placeholder="Username">
+            @if(registerForm.get('username')?.invalid && registerForm.get('username')?.touched) {
+            <mat-error>Please enter a valid username</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password" placeholder="Password">
+            @if(registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+            <mat-error>Password must be at least 6 characters</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Confirm Password</mat-label>
+            <input matInput type="password" formControlName="confirmPassword" placeholder="Confirm Password">
+            @if(registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched) {
+            <mat-error>Passwords do not match</mat-error>
+            }
+        </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid" class="auth-btn">Sign up</button>
+    </form>
+    <p class="switch-auth">Already have an account? <a routerLink="/login">Sign in</a></p>
+    @if(errorMessage) {
+      <div class="error-message">{{ errorMessage }}</div>
+    }
+  </mat-card>
+</div>
