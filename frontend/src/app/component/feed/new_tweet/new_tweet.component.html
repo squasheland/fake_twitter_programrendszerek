@@ -1,0 +1,15 @@
+<form class="tweet-form" (submit)="sendTweet($event)">
+    <mat-form-field class="tweet-input">
+        <textarea
+        matInput
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="1"
+        rows="1"
+        placeholder="What are you thinking about?"
+        [formField]="tweetForm.content"
+        ></textarea>
+    </mat-form-field>
+    <div class="tweet-button-container">
+        <button matButton="filled" type="submit">Tweet</button>
+    </div>
+</form>

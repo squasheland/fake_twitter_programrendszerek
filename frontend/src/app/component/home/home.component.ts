@@ -5,11 +5,12 @@ import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AuthService } from '../../service/auth';
 import { Router } from '@angular/router';
+import { FeedComponent } from '../feed/feed.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatCardModule, MatToolbarModule],
+  imports: [CommonModule, MatButtonModule, MatCardModule, MatToolbarModule, FeedComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })

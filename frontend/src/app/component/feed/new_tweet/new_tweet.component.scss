@@ -1,0 +1,16 @@
+.tweet-form {
+    width: 100%;
+}
+
+.tweet-input {
+    width: 100%;
+}
+
+.tweet-button-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+::ng-deep .mdc-line-ripple {
+    display: none;
+}

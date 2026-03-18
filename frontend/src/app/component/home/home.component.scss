@@ -1,7 +1,12 @@
 .home-container {
   padding: 20px;
-  max-width: 600px;
   margin: 20px auto;
+  display: flex;
+  justify-content: center;
+
+  app-feed {
+    width: 30%;
+  }
 
   mat-card {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
