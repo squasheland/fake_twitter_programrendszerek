@@ -1,6 +1,8 @@
 import express, { type Request, type Response } from 'express';
 import { body, validationResult } from 'express-validator';
 import authService from '../service/authService.js';
+import BackendError from '../error/backendError.js';
+import type AuthError from '../error/authError.js';
 
 const router = express.Router();
 
@@ -22,9 +24,9 @@ router.post('/register', [
     try {
         const newUser = await authService.registerUser(username, email, password, displayName);
         res.status(201).json({ message: 'User registered successfully', userId: newUser._id });
-    } catch (error) {
+    } catch (error: any) {
         console.error('Registration error:', error);
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(error.statusCode ?? 500).json({ message: error.message ?? 'Internal server error' });
     }
 });
 
@@ -43,9 +45,9 @@ router.post('/login', [
     try {
         const token = await authService.login(identifier, password);
         res.json({ message: 'Login successful', token });
-    } catch (error) {
+    } catch (error: any) {
         console.error('Login error:', error);
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(error.statusCode ?? 500).json({ message: error.message ?? 'Internal server error' });
     }
 });
 
