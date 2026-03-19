@@ -1,0 +1,41 @@
+<div class="tweet-container">
+
+  <div class="tweet-header">
+    <img [ngSrc]="'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlFTS6Iw8HYfMJx8Eq2HZ-mR3waCJa2VC1uwwbNoJ3Lp3Qakry8CIoxUpH7AmiQ_c4S1W2YY0Lfq1fGlpgDK2UWAO0RDAFaRISUTj4tDODQEbCpReevEKUhEVFmvwUjNUkv7w&s=10&ec=121584926'"
+         [height]="44"
+         [width]="44"
+         alt="Profile Picture"
+         class="profile-picture">
+    <div class="name-display">
+      <span class="displayed-name">{{'Displayed name'}}</span>
+      <span class="user-name">{{'@Username'}}</span>
+    </div>
+  </div>
+
+  <div class="content-container">
+    <span>
+      Contrary to popular belief, Lorem Ipsum is not simply random text.
+      It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.
+    </span>
+  </div>
+
+  <div class="interaction-container">
+
+    <button matIconButton class="interaction-button interaction-button-comment">
+      <mat-icon class="interaction-icon">comment</mat-icon>
+      <span class="interaction-count">0</span>
+    </button>
+
+    <button matIconButton class="interaction-button interaction-button-heart">
+      <mat-icon class="interaction-icon">favorite</mat-icon>
+      <span class="interaction-count">123</span>
+    </button>
+
+    <button matIconButton class="interaction-button interaction-button-retweet">
+      <mat-icon class="interaction-icon">cached</mat-icon>
+      <span class="interaction-count">134</span>
+    </button>
+
+  </div>
+
+</div>
