@@ -1,8 +1,6 @@
-import { ObjectId } from "mongodb";
-
 export interface Tweet {
-    _id: ObjectId;
-    userId: ObjectId;
+    id: string;
+    userId: string;
     media: string[] | null;
     content: string;
     likesCount: number;

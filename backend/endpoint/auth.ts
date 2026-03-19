@@ -1,8 +1,6 @@
 import express, { type Request, type Response } from 'express';
 import { body, validationResult } from 'express-validator';
 import authService from '../service/authService.js';
-import BackendError from '../error/backendError.js';
-import type AuthError from '../error/authError.js';
 
 const router = express.Router();
 
