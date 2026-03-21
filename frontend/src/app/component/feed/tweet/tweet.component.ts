@@ -7,6 +7,6 @@ import { MatIconButton } from '@angular/material/button';
   selector: 'app-tweet',
   imports: [NgOptimizedImage, MatIcon, MatIconButton],
   templateUrl: './tweet.component.html',
-  styleUrl: './tweet.component.scss',
+  styleUrls: [ '../feed.component.scss', './tweet.component.scss'],
 })
 export class TweetComponent {}

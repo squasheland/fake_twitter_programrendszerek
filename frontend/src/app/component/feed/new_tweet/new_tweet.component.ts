@@ -10,7 +10,7 @@ import { TweetService } from '../../../service/tweet.service';
   selector: 'app-new-tweet',
   imports: [MatButtonModule, MatInputModule, MatFormFieldModule, FormField, TextFieldModule],
   templateUrl: './new_tweet.component.html',
-  styleUrl: './new_tweet.component.scss',
+  styleUrls: [ '../feed.component.scss', './new_tweet.component.scss'],
 })
 export class NewTweetComponent {
   tweetForm = form(signal({content: ''}));
