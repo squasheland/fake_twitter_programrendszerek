@@ -1,18 +1,26 @@
 .tweet-container {
-	width: 100%;
-  	display: flex;
-  	flex-direction: column;
-  	gap: 15px;
-  	border: 1px solid lightgray;
-  	padding: 15px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  border: 1px solid lightgray;
+  padding: 15px;
 }
 
 :host {
-	display: block;
-	width: 100%;
+  display: block;
+  width: 100%;
 }
 
 app-new-tweet {
-	display: block;
-	width: 100%;
+  display: block;
+  width: 100%;
+}
+
+.feed-status {
+  display: block;
+  width: 100%;
+  padding: 12px 0;
+  text-align: center;
+  color: #5f6368;
 }

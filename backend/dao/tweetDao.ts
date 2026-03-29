@@ -1,6 +1,11 @@
-import { Collection, ObjectId } from 'mongodb';
+import { Collection, type Filter, ObjectId } from 'mongodb';
 import Database from '../database/databse.js';
 import type { Tweet } from '../model/Tweet.js';
+
+export interface TweetPageResult {
+    tweets: Tweet[];
+    hasMore: boolean;
+}
 
 class TweetDao {
     private readonly LIMIT_SIZE = 50;
@@ -26,24 +31,30 @@ class TweetDao {
         return tweet;
     }
 
-    async getTweetsByUserId(userId: ObjectId, page = 1): Promise<Tweet[]> {
-        return await this.collection
-            .find({ userId, isDeleted: false })
+    private async getPagedTweets(filter: Filter<Tweet>, page = 1): Promise<TweetPageResult> {
+        const tweets = await this.collection
+            .find(filter)
             .sort({ createdAt: -1 })
             .skip((page - 1) * this.LIMIT_SIZE)
-            .limit(this.LIMIT_SIZE)
+            .limit(this.LIMIT_SIZE + 1)
             .toArray();
+
+        const hasMore = tweets.length > this.LIMIT_SIZE;
+
+        if (hasMore) {
+            tweets.pop();
+        }
+
+        return { tweets, hasMore };
     }
 
-    async getTweets(page = 1): Promise<Tweet[]> {
-        return await this.collection
-            .find({ isDeleted: false })
-            .sort({ createdAt: -1 })
-            .skip((page - 1) * this.LIMIT_SIZE)
-            .limit(this.LIMIT_SIZE)
-            .toArray();
+    async getTweetsByUserId(userId: ObjectId, page = 1): Promise<TweetPageResult> {
+        return await this.getPagedTweets({ userId, isDeleted: false }, page);
     }
 
+    async getTweets(page = 1): Promise<TweetPageResult> {
+        return await this.getPagedTweets({ isDeleted: false }, page);
+    }
 }
 
 export default new TweetDao();

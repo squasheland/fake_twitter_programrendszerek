@@ -1,8 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { Tweet } from '../model/Tweet';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
+import { map, Observable } from 'rxjs';
+import { Tweet, type TweetApiResponse, type TweetPage, type TweetPageApiResponse } from '../model/Tweet';
 
 @Injectable({
   providedIn: 'root',
@@ -15,15 +14,60 @@ export class TweetService {
     const token = localStorage.getItem('token');
     return new HttpHeaders({
       'Content-Type': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...(token ? { Authorization: 'Bearer ' + token } : {}),
     });
   }
 
+  private mapTweet(tweet: TweetApiResponse): Tweet {
+    return {
+      id: tweet.id,
+      userId: tweet.userId,
+      media: tweet.media,
+      content: tweet.content,
+      likesCount: tweet.likesCount,
+      retweetCount: tweet.retweetCount,
+      commentCount: tweet.commentCount,
+      createdAt: new Date(tweet.createdAt),
+      updatedAt: tweet.updatedAt ? new Date(tweet.updatedAt) : null,
+      isDeleted: tweet.isDeleted,
+    };
+  }
+
   postTweet(content: string): Observable<Tweet> {
-    return this.http.post<Tweet>(
-      `${this.apiUrl}/tweet/create`,
-      { content },
-      { headers: this.getAuthHeaders() }
-    );
+    return this.http
+      .post<TweetApiResponse>(
+        this.apiUrl + '/tweet/create',
+        { content },
+        { headers: this.getAuthHeaders() }
+      )
+      .pipe(map((tweet) => this.mapTweet(tweet)));
+  }
+
+  getTweetsForFeed(page: number): Observable<TweetPage> {
+    return this.http
+      .get<TweetPageApiResponse>(this.apiUrl + '/tweet/' + page, {
+        headers: this.getAuthHeaders(),
+      })
+      .pipe(
+        map((response) => ({
+          tweets: response.tweets.map((tweet) => this.mapTweet(tweet)),
+          hasMore: response.hasMore,
+          page: response.page,
+        }))
+      );
+  }
+
+  getTweetsByUser(userId: string, page = 1): Observable<TweetPage> {
+    return this.http
+      .get<TweetPageApiResponse>(this.apiUrl + '/tweet/user/' + userId + '/' + page, {
+        headers: this.getAuthHeaders(),
+      })
+      .pipe(
+        map((response) => ({
+          tweets: response.tweets.map((tweet) => this.mapTweet(tweet)),
+          hasMore: response.hasMore,
+          page: response.page,
+        }))
+      );
   }
 }

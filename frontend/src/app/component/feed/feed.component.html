@@ -1,2 +1,17 @@
 <app-new-tweet></app-new-tweet>
-<app-tweet></app-tweet>
+
+@for (tweet of tweets(); track tweet.id) {
+  <app-tweet [tweet]="tweet"></app-tweet>
+} @empty {
+  @if (!isLoading()) {
+    <span class="feed-status">There's nothing to show</span>
+  }
+}
+
+@if (isLoading()) {
+  <span class="feed-status">Loading tweets...</span>
+}
+
+@if (!hasMore() && tweets().length > 0) {
+  <span class="feed-status">No more tweets to load.</span>
+}
