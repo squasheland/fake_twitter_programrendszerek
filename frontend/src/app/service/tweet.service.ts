@@ -1,7 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import { Tweet, type TweetApiResponse, type TweetPage, type TweetPageApiResponse } from '../model/Tweet';
+import {
+  Tweet,
+  type LikeToggleResponse,
+  type TweetApiResponse,
+  type TweetPage,
+  type TweetPageApiResponse,
+} from '../model/Tweet';
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +36,7 @@ export class TweetService {
       createdAt: new Date(tweet.createdAt),
       updatedAt: tweet.updatedAt ? new Date(tweet.updatedAt) : null,
       isDeleted: tweet.isDeleted,
+      isLiked: tweet.isLiked,
     };
   }
 
@@ -69,5 +76,13 @@ export class TweetService {
           page: response.page,
         }))
       );
+  }
+
+  handleLike(tweetId: string): Observable<LikeToggleResponse> {
+    return this.http.post<LikeToggleResponse>(
+      this.apiUrl + '/like/tweet/' + tweetId,
+      {},
+      { headers: this.getAuthHeaders() }
+    );
   }
 }

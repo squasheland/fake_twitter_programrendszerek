@@ -39,7 +39,8 @@
 }
 
 .interaction-button-heart:hover,
-.interaction-button-heart:focus-visible {
+.interaction-button-heart:focus-visible,
+.interaction-button-heart.liked {
   color: #f91880;
   --mat-icon-button-state-layer-color: #f91880;
 }

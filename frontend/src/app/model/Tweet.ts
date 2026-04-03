@@ -9,6 +9,7 @@ export interface Tweet {
     createdAt: Date;
     updatedAt: Date | null;
     isDeleted: boolean;
+    isLiked: boolean;
 }
 
 export interface TweetPage {
@@ -28,10 +29,17 @@ export interface TweetApiResponse {
     createdAt: string;
     updatedAt: string | null;
     isDeleted: boolean;
+    isLiked: boolean;
 }
 
 export interface TweetPageApiResponse {
     tweets: TweetApiResponse[];
     hasMore: boolean;
     page: number;
+}
+
+export interface LikeToggleResponse {
+    tweetId: string;
+    isLiked: boolean;
+    likesCount: number;
 }

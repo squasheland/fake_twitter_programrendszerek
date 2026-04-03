@@ -55,6 +55,15 @@ class TweetDao {
     async getTweets(page = 1): Promise<TweetPageResult> {
         return await this.getPagedTweets({ isDeleted: false }, page);
     }
+
+    async updateLikesCount(tweetId: ObjectId, delta: 1 | -1): Promise<Tweet | null> {
+        const result = await this.collection.findOneAndUpdate(
+            { _id: tweetId },
+            { $inc: { likesCount: delta } },
+            { returnDocument: 'after' }
+        );
+        return result ?? null;
+    }
 }
 
 export default new TweetDao();

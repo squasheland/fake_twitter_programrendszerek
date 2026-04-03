@@ -18,9 +18,16 @@
       <span class="interaction-count">{{ tweet().commentCount }}</span>
     </button>
 
-    <button matIconButton class="interaction-button interaction-button-heart">
-      <mat-icon class="interaction-icon">favorite</mat-icon>
-      <span class="interaction-count">{{ tweet().likesCount }}</span>
+    <button
+      matIconButton
+      class="interaction-button interaction-button-heart"
+      [class.liked]="isLiked()"
+      [disabled]="isLikeLoading()"
+      [attr.aria-pressed]="isLiked()"
+      (click)="onLikeClick()"
+    >
+      <mat-icon class="interaction-icon">{{ isLiked() ? 'favorite' : 'favorite_border' }}</mat-icon>
+      <span class="interaction-count">{{ likeCount() }}</span>
     </button>
 
     <button matIconButton class="interaction-button interaction-button-retweet">

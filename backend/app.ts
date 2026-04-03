@@ -5,6 +5,7 @@ import Database from './database/databse.js';
 import authRoutes from './endpoint/auth.js';
 import userRoutes from './endpoint/user.js';
 import tweetRoutes from './endpoint/tweet.js';
+import likeRoutes from './endpoint/like.js';
 
 const app = express();
 const port = 3000;
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/user', authenticateToken, userRoutes);
 app.use('/api/tweet', authenticateToken, tweetRoutes);
+app.use('/api/like', authenticateToken, likeRoutes);
 
 async function startServer() {
   await Database.init();
