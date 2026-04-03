@@ -5,10 +5,10 @@
   "license": "ISC",
   "author": "",
   "type": "module",
-  "main": "dist/app.js",
+  "main": "dist/backend/app.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/app.js",
+    "start": "node dist/backend/app.js",
     "dev": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

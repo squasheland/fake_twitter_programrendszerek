@@ -1,6 +1,6 @@
 {
-  "watch": ["."],
+  "watch": [".", "../common"],
   "ext": "ts,js,json",
   "ignore": ["dist/"],
-  "exec": "tsc && node dist/app.js"
+  "exec": "tsc && node dist/backend/app.js"
 }

@@ -1,13 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import {
-  Tweet,
-  type LikeToggleResponse,
-  type TweetApiResponse,
-  type TweetPage,
-  type TweetPageApiResponse,
-} from '../model/Tweet';
+import type { TweetResponse } from '../../../../common/tweet/TweetResponse';
+import type { TweetPage } from '../../../../common/tweet/TweetPage';
+import type { LikeResponse } from '../../../../common/like/LikeResponse';
+import type { TweetApiResponse } from '../model/TweetApiResponse';
+import type { TweetPageApiResponse } from '../model/TweetPageApiResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +22,7 @@ export class TweetService {
     });
   }
 
-  private mapTweet(tweet: TweetApiResponse): Tweet {
+  private mapTweet(tweet: TweetApiResponse): TweetResponse {
     return {
       id: tweet.id,
       userId: tweet.userId,
@@ -40,7 +38,7 @@ export class TweetService {
     };
   }
 
-  postTweet(content: string): Observable<Tweet> {
+  postTweet(content: string): Observable<TweetResponse> {
     return this.http
       .post<TweetApiResponse>(
         this.apiUrl + '/tweet/create',
@@ -78,8 +76,8 @@ export class TweetService {
       );
   }
 
-  handleLike(tweetId: string): Observable<LikeToggleResponse> {
-    return this.http.post<LikeToggleResponse>(
+  handleLike(tweetId: string): Observable<LikeResponse> {
+    return this.http.post<LikeResponse>(
       this.apiUrl + '/like/tweet/' + tweetId,
       {},
       { headers: this.getAuthHeaders() }

@@ -1,61 +1,12 @@
 import type { Tweet } from '../model/Tweet.js';
+import type { TweetResponse } from '../../common/tweet/TweetResponse.js';
+import type { TweetPage } from '../../common/tweet/TweetPage.js';
 import tweetDao, { type TweetPageResult } from '../dao/tweetDao.js';
 import likeDao from '../dao/likeDao.js';
 import { ObjectId } from 'mongodb';
 
-export interface TweetResponse {
-    id: string;
-    userId: string;
-    media: string[] | null;
-    content: string;
-    likesCount: number;
-    retweetCount: number;
-    commentCount: number;
-    createdAt: Date;
-    updatedAt: Date | null;
-    isDeleted: boolean;
-    isLiked: boolean;
-}
-
-export interface TweetPageResponse {
-    tweets: TweetResponse[];
-    hasMore: boolean;
-    page: number;
-}
-
 class TweetService {
-    async createTweet(userId: string | undefined | null, content: string): Promise<TweetResponse> {
-        if (!userId) {
-            throw new Error('User ID is required to post a tweet');
-        }
-
-        if (!content) {
-            throw new Error('Content is required to post a tweet');
-        }
-
-        const tweet = await tweetDao.createTweet(new ObjectId(userId), content);
-        return this.mapTweet(tweet);
-    }
-
-    async getTweetsForFeed(page: number, currentUserId: string): Promise<TweetPageResponse> {
-        const normalizedPage = this.normalizePage(page);
-        const tweets = await tweetDao.getTweets(normalizedPage);
-
-        return this.mapTweetPage(normalizedPage, tweets, currentUserId);
-    }
-
-    async getTweetsByUser(userId: string, page: number): Promise<TweetPageResponse> {
-        if (!ObjectId.isValid(userId)) {
-            throw new Error('Invalid user ID');
-        }
-
-        const normalizedPage = this.normalizePage(page);
-        const tweets = await tweetDao.getTweetsByUserId(new ObjectId(userId), normalizedPage);
-
-        return this.mapTweetPage(normalizedPage, tweets, userId);
-    }
-
-        private normalizePage(page: number): number {
+    private normalizePage(page: number): number {
         if (!Number.isInteger(page) || page < 1) {
             throw new Error('Page must be a positive integer');
         }
@@ -83,7 +34,7 @@ class TweetService {
         page: number,
         result: TweetPageResult,
         currentUserId: string
-    ): Promise<TweetPageResponse> {
+    ): Promise<TweetPage> {
         const tweetIds = result.tweets.map((t) => t._id);
         const likedSet = await likeDao.getLikedTweetIds(new ObjectId(currentUserId), tweetIds);
 
@@ -94,6 +45,37 @@ class TweetService {
             hasMore: result.hasMore,
             page,
         };
+    }
+
+    async createTweet(userId: string | undefined | null, content: string): Promise<TweetResponse> {
+        if (!userId) {
+            throw new Error('User ID is required to post a tweet');
+        }
+
+        if (!content) {
+            throw new Error('Content is required to post a tweet');
+        }
+
+        const tweet = await tweetDao.createTweet(new ObjectId(userId), content);
+        return this.mapTweet(tweet);
+    }
+
+    async getTweetsForFeed(page: number, currentUserId: string): Promise<TweetPage> {
+        const normalizedPage = this.normalizePage(page);
+        const tweets = await tweetDao.getTweets(normalizedPage);
+
+        return this.mapTweetPage(normalizedPage, tweets, currentUserId);
+    }
+
+    async getTweetsByUser(userId: string, page: number): Promise<TweetPage> {
+        if (!ObjectId.isValid(userId)) {
+            throw new Error('Invalid user ID');
+        }
+
+        const normalizedPage = this.normalizePage(page);
+        const tweets = await tweetDao.getTweetsByUserId(new ObjectId(userId), normalizedPage);
+
+        return this.mapTweetPage(normalizedPage, tweets, userId);
     }
 }
 

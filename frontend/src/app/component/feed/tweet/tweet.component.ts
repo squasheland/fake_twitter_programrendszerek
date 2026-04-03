@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, inject, input, signal, OnInit } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
-import type { Tweet } from '../../../model/Tweet';
+import type { TweetResponse } from '../../../../../../common/tweet/TweetResponse';
 import { UserMenuComponent } from '../../user-menu/user-menu.component';
 import { TweetTimeComponent } from './tweet-time/tweet-time.component';
 import { TweetService } from '../../../service/tweet.service';
@@ -14,7 +14,7 @@ import { TweetService } from '../../../service/tweet.service';
   styleUrls: ['../feed.component.scss', './tweet.component.scss'],
 })
 export class TweetComponent implements OnInit {
-  tweet = input.required<Tweet>();
+  tweet = input.required<TweetResponse>();
 
   private tweetService = inject(TweetService);
 

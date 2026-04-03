@@ -1,12 +1,7 @@
 import { ObjectId, MongoServerError } from 'mongodb';
 import likeDao from '../dao/likeDao.js';
 import tweetDao from '../dao/tweetDao.js';
-
-export interface LikeResponse {
-    tweetId: string;
-    isLiked: boolean;
-    likesCount: number;
-}
+import type { LikeResponse } from '../../common/like/LikeResponse.js';
 
 class LikeService {
     async handleLike(userId: string, tweetId: string): Promise<LikeResponse> {

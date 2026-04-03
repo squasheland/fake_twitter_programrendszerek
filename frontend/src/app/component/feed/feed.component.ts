@@ -2,7 +2,7 @@ import { Component, HostListener, inject, OnInit, signal } from '@angular/core';
 import { NewTweetComponent } from './new_tweet/new_tweet.component';
 import { TweetComponent } from './tweet/tweet.component';
 import { TweetService } from '../../service/tweet.service';
-import type { Tweet } from '../../model/Tweet';
+import type { TweetResponse } from '../../../../../common/tweet/TweetResponse';
 
 @Component({
   selector: 'app-feed',
@@ -15,7 +15,7 @@ export class FeedComponent implements OnInit {
   private readonly scrollThreshold = 200;
   private nextPage = 1;
 
-  protected readonly tweets = signal<Tweet[]>([]);
+  protected readonly tweets = signal<TweetResponse[]>([]);
   protected readonly isLoading = signal(false);
   protected readonly hasMore = signal(true);
 
