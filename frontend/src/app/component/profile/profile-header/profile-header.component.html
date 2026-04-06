@@ -1,0 +1,31 @@
+<div class="profile-header">
+  <div class="pfp-container">
+    @if (hasRealPfp()) {
+      <img
+        [ngSrc]="profile().pfp"
+        [width]="80"
+        [height]="80"
+        [alt]="profile().displayName + ' profile picture'"
+        class="pfp"
+      />
+    } @else {
+      <div class="pfp-fallback" aria-hidden="true">{{ avatarInitial() }}</div>
+    }
+  </div>
+
+  <div class="profile-info">
+    <h1 class="display-name">{{ profile().displayName }}</h1>
+    <p class="username">@{{ profile().username }}</p>
+    @if (profile().bio) {
+      <p class="bio">{{ profile().bio }}</p>
+    }
+    <ul class="stats" aria-label="Profile statistics">
+      <li>
+        <strong>{{ profile().followingCount }}</strong> Following
+      </li>
+      <li>
+        <strong>{{ profile().followersCount }}</strong> Followers
+      </li>
+    </ul>
+  </div>
+</div>

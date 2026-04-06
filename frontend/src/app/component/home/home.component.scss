@@ -1,22 +1,21 @@
 .home-container {
-  padding: 20px;
-  margin: 20px auto;
   display: flex;
+  flex-direction: row;
   justify-content: center;
+  gap: 24px;
+  width: 100%;
+  margin: 0 auto;
 
-  app-feed {
-    width: 30%;
+  router-outlet {
+    width: 0%;
   }
 
-  mat-card {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  app-feed, app-profile {
+    width: 33%;
   }
 
-  mat-card-content {
-    p {
-      margin: 10px 0;
-      font-size: 16px;
-      line-height: 1.5;
-    }
+  .place-holder, app-sidebar {
+    min-width: 33%;
   }
 }
+

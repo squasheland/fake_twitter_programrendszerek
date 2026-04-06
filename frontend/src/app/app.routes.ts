@@ -8,6 +8,22 @@ import { GuestGuard } from './guard/guest.guard';
 export const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [GuestGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [GuestGuard] },
-  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: '**', redirectTo: '/login' }
+  {
+    path: '',
+    component: HomeComponent,
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./component/feed/feed.component').then((m) => m.FeedComponent),
+      },
+      {
+        path: 'profile/:username',
+        loadComponent: () =>
+          import('./component/profile/profile.component').then((m) => m.ProfileComponent),
+      },
+    ],
+  },
+  { path: '**', redirectTo: '/login' },
 ];
